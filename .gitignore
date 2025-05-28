@@ -1,0 +1,6 @@
+# environments
+.venv/
+venv/
+
+# cradentials
+.aws_credentials/

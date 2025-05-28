@@ -1,0 +1,9 @@
+services:
+  app:
+    build:
+      context: ../..
+      dockerfile: deployment/local/Dockerfile
+    container_name: bg_rank
+    volumes:
+      - ../..:/workspace
+    
