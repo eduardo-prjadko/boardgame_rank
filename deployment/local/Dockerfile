@@ -1,11 +1,16 @@
-ARG IMAGE=python
-ARG TAG=3.12.4-slim-bullseye
+ARG IMAGE
+ARG TAG
 
 FROM $IMAGE:$TAG
 
+# set args
+ARG BUILD_PATH
+ARG USER_NAME
+ARG USER_ID
+ARG AWS_CREDENTIALS_PATH
+ARG DJANGO_SETTINGS_PATH
+
 # create container user
-ARG USER_NAME=bg_rank
-ARG USER_ID=1200
 USER root
 RUN adduser --shell /bin/bash --uid ${USER_ID} --disabled-login ${USER_NAME}
 
@@ -29,11 +34,12 @@ RUN unzip -q awscliv2.zip && ./aws/install
 USER ${USER_NAME}
 
 # set aws credentials as env vars
-ARG AWS_CREDENTIALS_PATH="/tmp/credentials"
 COPY ./.aws_credentials ${AWS_CREDENTIALS_PATH}
+COPY ./.django_settings ${DJANGO_SETTINGS_PATH}
 COPY ./tasks.py .
 RUN invoke update-bashrc --config-path=${AWS_CREDENTIALS_PATH}/credentials; \
-    invoke update-bashrc --config-path=${AWS_CREDENTIALS_PATH}/config
+    invoke update-bashrc --config-path=${AWS_CREDENTIALS_PATH}/config; \
+    invoke update-bashrc --config-path=${DJANGO_SETTINGS_PATH}/settings
 
 # install node.js
 ENV NODE_VERSION 22.3.0
