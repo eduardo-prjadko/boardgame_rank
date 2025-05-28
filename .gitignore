@@ -4,3 +4,6 @@ venv/
 
 # cradentials
 .aws_credentials/
+
+# cache
+.ruff_cache
