@@ -7,9 +7,20 @@
     "workspaceFolder": "/workspace",
     "customizations":{
         "vscode": {
+            "settings": {
+                "terminal.integrated.cwd": "/workspace/app/src/bg_rank",
+                "files.associations": {
+                    "*.html": "django-html"
+                },
+                "emmet.includeLanguages": {
+                    "django-html": "html"
+                }
+            },
             "extensions": [
                 "ms-python.vscode-pylance",
-                "GitHub.vscode-github-actions"
+                "GitHub.vscode-github-actions",
+                "batisteo.vscode-django",
+                "bierner.markdown-mermaid",
             ]
         }
     },
