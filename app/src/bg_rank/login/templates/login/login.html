@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Nexus - Login Page{% endblock title %}Login Page
+
+{% block content %}
+    <div class="container-fluid vh-100">
+        <div class="row h-100">
+            <!-- left side -->
+            <div class="col-md-6 d-flex justify-content-center align-items-center bg-primary">
+                <h1 class="text-white">Bem vindo ao Boardgame Rank</h1>
+            </div>
+            <!-- right side -->
+            <div class="col-md-6 d-flex justify-content-center align-items-center">
+                <form class="w-75">
+                    <h2 class="mb-4">Login</h2>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="Insira seu e-mail">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Senha</label>
+                        <input type="password" class="form-control" id="password" placeholder="Insira sua senha">
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
