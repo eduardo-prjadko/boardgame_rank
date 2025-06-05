@@ -3,18 +3,27 @@
 {% block title %}Boardgame Rank - Login{% endblock title %}
 
 {% block login_content %}
-    <div class="col-md-6 d-flex justify-content-center align-items-center">
-        <form class="w-75">
+    <div class="col-md-6 d-flex flex-column justify-content-center align-items-center">
+        <form class="w-75" method="POST" action="">
+            {% csrf_token %}
             <h2 class="mb-4">Login</h2>
             <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" placeholder="Insira seu e-mail">
+                <label for="username" class="form-label">Usuário</label>
+                <input type="text" class="form-control" name="username">
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Senha</label>
-                <input type="password" class="form-control" id="password" placeholder="Insira sua senha">
+                <input type="password" class="form-control" name="password">
             </div>
             <button type="submit" class="btn btn-primary w-100">Login</button>
         </form>
+        <p>
+            Não possui cadastro? <a href="{% url 'register' %}">Cadastre-se</a>
+        </p>
+        {% for message in messages %}
+            <div id="successMessage" class="alert alert-{% if message.level_tag == "error" %}danger{% else %}success{% endif %} mt-3" role="alert">    
+                {{ message }}
+            </div>
+        {% endfor%}
     </div>
 {% endblock login_content %}
