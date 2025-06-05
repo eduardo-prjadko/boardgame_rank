@@ -11,3 +11,6 @@ __pycache__/
 
 # django
 .django_settings
+
+# sqlite
+db.sqlite3
