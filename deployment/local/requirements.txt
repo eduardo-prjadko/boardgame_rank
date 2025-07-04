@@ -1,6 +1,7 @@
 -r ../../app/requirements.txt
 -r ../../app/requirements-dev.txt
 Django==5.2.1
+django-select2==8.4.1
 invoke==2.2.0
 pre-commit==3.7.1
 detect-secrets==1.5.0
