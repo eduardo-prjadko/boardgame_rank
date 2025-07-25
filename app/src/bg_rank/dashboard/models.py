@@ -2,6 +2,29 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+# class BGModel(models.Model):
+#     slug_source_field = "name"  # Default source field for slug
+
+#     slug = models.SlugField(unique=True, blank=True)
+
+#     class Meta:
+#         abstract = True  # This is an abstract base class
+
+#     def save(self, *args, **kwargs):
+#         # Only auto-slug if slug is blank and the source field exists
+#         if not self.slug and hasattr(self, self.slug_source_field):
+
+#             base_slug = slugify(getattr(self, self.slug_source_field))
+#             slug = base_slug
+#             counter = 1
+#             ModelClass = self.__class__
+#             while ModelClass.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+#                 slug = f"{base_slug}-{counter}"
+#                 counter += 1
+#             self.slug = slug
+#         super().save(*args, **kwargs)
+
+
 class Boardgame(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField()

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse
 from django.views.generic.edit import FormView
 
-from .forms import BoardgameForm, MatchForm
+from .forms import BoardgameForm, MatchForm, SeasonForm
 
 
 def main(request: HttpRequest) -> HttpResponse:
@@ -15,6 +15,10 @@ def boardgame(request: HttpRequest) -> HttpResponse:
 
 def match(request: HttpRequest) -> HttpResponse:
     return render(request, "dashboard/match/match.html")
+
+
+def season(request: HttpRequest) -> HttpResponse:
+    return render(request, "dashboard/season/season.html")
 
 
 class BoardgameFormView(FormView):
@@ -34,5 +38,15 @@ class MatchFormView(FormView):
     success_url = "/match/"
 
     def form_valid(self, form: MatchForm) -> HttpResponse:
+        form.save()
+        return super().form_valid(form)
+
+
+class SeasonFormView(FormView):
+    template_name = "dashboard/season/create.html"
+    form_class = SeasonForm
+    success_url = "/season/"
+
+    def form_valid(self, form: SeasonForm) -> HttpResponse:
         form.save()
         return super().form_valid(form)

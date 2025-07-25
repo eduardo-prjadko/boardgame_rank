@@ -9,4 +9,6 @@ urlpatterns = [
     path("boardgame/create/", views.BoardgameFormView.as_view()),
     path("match/", views.match),
     path("match/create/", views.MatchFormView.as_view()),
+    path("season/", views.season),
+    path("season/create/", views.SeasonFormView.as_view()),
 ]

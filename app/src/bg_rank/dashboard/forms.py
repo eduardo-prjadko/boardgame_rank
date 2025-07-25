@@ -1,7 +1,7 @@
 from django import forms
 from django.utils.text import slugify
 from django.contrib.auth.models import User
-from .models import Boardgame, Match
+from .models import Boardgame, Match, Season
 import django_select2.forms as s2forms
 
 
@@ -55,6 +55,27 @@ class MatchForm(forms.ModelForm):
             "season_id": "Temporada",
             "enrolled_players": "Jogadores",
             "is_friendly": "Amistoso",
+            "start_at": "Início",
+            "end_at": "Fim",
+        }
+        widgets = {
+            "enrolled_players": PlayerWidget,
+        }
+        querysets = {"enrolled_players": User.objects.all()}
+
+
+class SeasonForm(forms.ModelForm):
+    class Meta:
+        model = Season
+        fields = (
+            "name",
+            "enrolled_players",
+            "start_at",
+            "end_at",
+        )
+        labels = {
+            "name": "Nome da temporada",
+            "enrolled_players": "Jogadores",
             "start_at": "Início",
             "end_at": "Fim",
         }
