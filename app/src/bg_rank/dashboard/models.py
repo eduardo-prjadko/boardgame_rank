@@ -1,31 +1,32 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.text import slugify
 
 
-# class BGModel(models.Model):
-#     slug_source_field = "name"  # Default source field for slug
+class BGModel(models.Model):
+    slug_source_field = "name"
 
-#     slug = models.SlugField(unique=True, blank=True)
+    slug = models.SlugField(unique=True, blank=True)
 
-#     class Meta:
-#         abstract = True  # This is an abstract base class
+    class Meta:
+        abstract = True
 
-#     def save(self, *args, **kwargs):
-#         # Only auto-slug if slug is blank and the source field exists
-#         if not self.slug and hasattr(self, self.slug_source_field):
+    def save(self, *args, **kwargs):
+        # Only auto-slug if slug is blank and the source field exists
+        if "slug" in [field.name for field in self._meta.get_fields()]:
+            if not self.slug and hasattr(self, self.slug_source_field):
+                base_slug = slugify(getattr(self, self.slug_source_field))
+                slug = base_slug
+                counter = 1
+                ModelClass = self.__class__
+                while ModelClass.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                    slug = f"{base_slug}-{counter}"
+                    counter += 1
+                self.slug = slug
+        super().save(*args, **kwargs)
 
-#             base_slug = slugify(getattr(self, self.slug_source_field))
-#             slug = base_slug
-#             counter = 1
-#             ModelClass = self.__class__
-#             while ModelClass.objects.filter(slug=slug).exclude(pk=self.pk).exists():
-#                 slug = f"{base_slug}-{counter}"
-#                 counter += 1
-#             self.slug = slug
-#         super().save(*args, **kwargs)
 
-
-class Boardgame(models.Model):
+class Boardgame(BGModel):
     name = models.CharField(max_length=100)
     slug = models.SlugField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -35,7 +36,7 @@ class Boardgame(models.Model):
         return f"{self.name}"
 
 
-class Season(models.Model):
+class Season(BGModel):
     name = models.CharField(max_length=100)
     slug = models.SlugField()
     enrolled_players = models.ManyToManyField(User, through="SeasonPlayer")
@@ -48,7 +49,7 @@ class Season(models.Model):
         return f"{self.name}"
 
 
-class Match(models.Model):
+class Match(BGModel):
     name = models.CharField(max_length=100)
     slug = models.SlugField()
     boardgame_id = models.ForeignKey(Boardgame, on_delete=models.SET_NULL, null=True)
