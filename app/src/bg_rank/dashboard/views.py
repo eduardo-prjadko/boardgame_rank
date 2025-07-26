@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse
 from django.views.generic.edit import FormView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import get_user_model
+from django.views.generic.detail import DetailView
 
 from .forms import BoardgameForm, MatchForm, SeasonForm
 
@@ -50,3 +53,14 @@ class SeasonFormView(FormView):
     def form_valid(self, form: SeasonForm) -> HttpResponse:
         form.save()
         return super().form_valid(form)
+
+
+User = get_user_model()
+
+
+class UserProfileView(LoginRequiredMixin, DetailView):
+    model = User
+    template_name = "dashboard/player/detail.html"
+
+    def get_object(self):
+        return self.request.user
