@@ -3,7 +3,10 @@ from django.http import HttpRequest, HttpResponse
 from django.views.generic.edit import FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
+from django.contrib import messages
 from django.views.generic.detail import DetailView
+from django.contrib.auth.views import PasswordChangeView
+from django.urls import reverse_lazy
 
 from .forms import BoardgameForm, MatchForm, SeasonForm
 
@@ -64,3 +67,12 @@ class UserProfileView(LoginRequiredMixin, DetailView):
 
     def get_object(self):
         return self.request.user
+
+
+class CustomPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
+    template_name = "dashboard/player/change_password.html"
+    success_url = reverse_lazy("player_profile")
+
+    def form_valid(self, form):
+        messages.success(self.request, "Senha alterada com sucesso!")
+        return super().form_valid(form)

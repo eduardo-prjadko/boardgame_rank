@@ -11,5 +11,10 @@ urlpatterns = [
     path("match/create/", views.MatchFormView.as_view()),
     path("season/", views.season),
     path("season/create/", views.SeasonFormView.as_view()),
-    path("profile/", views.UserProfileView.as_view(), name="user_profile"),
+    path("profile/", views.UserProfileView.as_view(), name="player_profile"),
+    path(
+        "profile/change_password",
+        views.CustomPasswordChangeView.as_view(),
+        name="change_password",
+    ),
 ]
