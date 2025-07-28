@@ -5,18 +5,16 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
 from django.contrib import messages
 from django.views.generic.detail import DetailView
+from django.views.generic import ListView
 from django.contrib.auth.views import PasswordChangeView
 from django.urls import reverse_lazy
 
 from .forms import BoardgameForm, MatchForm, SeasonForm
+from .models import Boardgame
 
 
 def main(request: HttpRequest) -> HttpResponse:
     return render(request, "dashboard/test.html")
-
-
-def boardgame(request: HttpRequest) -> HttpResponse:
-    return render(request, "dashboard/boardgame/boardgame.html")
 
 
 def match(request: HttpRequest) -> HttpResponse:
@@ -76,3 +74,9 @@ class CustomPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
     def form_valid(self, form):
         messages.success(self.request, "Senha alterada com sucesso!")
         return super().form_valid(form)
+
+
+class BoardGameListView(ListView):
+    model = Boardgame
+    template_name = "dashboard/boardgame/boardgame.html"
+    context_object_name = "boardgames"
