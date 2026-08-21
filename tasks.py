@@ -5,7 +5,7 @@ from invoke import task
 
 
 def read_config(config_path):
-    config = configparser.ConfigParser()
+    config = configparser.ConfigParser(interpolation=None)
     config.read(config_path)
     return config
 
