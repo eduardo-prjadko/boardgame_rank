@@ -33,14 +33,6 @@ RUN unzip -q awscliv2.zip && ./aws/install
 
 USER ${USER_NAME}
 
-# set aws credentials as env vars
-COPY ./.aws_credentials ${AWS_CREDENTIALS_PATH}
-COPY ./.django_settings ${DJANGO_SETTINGS_PATH}
-COPY ./tasks.py .
-RUN invoke update-bashrc --config-path=${AWS_CREDENTIALS_PATH}/credentials; \
-    invoke update-bashrc --config-path=${AWS_CREDENTIALS_PATH}/config; \
-    invoke update-bashrc --config-path=${DJANGO_SETTINGS_PATH}/settings
-
 # install node.js
 ENV NODE_VERSION 22.3.0
 ENV NVM_DIR /home/${USER_NAME}/.nvm

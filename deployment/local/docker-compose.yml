@@ -12,6 +12,8 @@ services:
         AWS_CREDENTIALS_PATH: "/tmp/credentials"
         DJANGO_SETTINGS_PATH: "/tmp/django_settings"
     container_name: bg_rank
+    env_file:
+      - ./.env
     volumes:
       - ../..:/workspace
     

@@ -2,18 +2,13 @@
 .venv/
 venv/
 
-# cradentials
-.aws_credentials/
-
 # cache
 .ruff_cache
 __pycache__/
 
-# django
-.django_settings
-
 # sqlite
 db.sqlite3
 
-# claude
-.claude_settings/
+# env files with secrets
+.env
+*.env
