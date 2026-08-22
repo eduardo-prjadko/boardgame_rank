@@ -54,4 +54,7 @@ ENV PATH $NVM_DIR/versions/node/v${NODE_VERSION}/bin:$PATH
 # install aws cdk
 RUN npm install -g aws-cdk
 
+# install claude cli
+RUN curl -fsSL https://claude.ai/install.sh | bash
+
 CMD ["sleep", "infinity"]
